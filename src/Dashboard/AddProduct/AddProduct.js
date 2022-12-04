@@ -1,10 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import Loader from '../../Components/Shared/Loader';
 
 const AddProduct = () => {
     const {handleSubmit, register, formState: {errors} } = useForm();
+    const navigate = useNavigate();
+    //get all categoires
     const {data: categories = [], isLoading, refetch} = useQuery({
       queryKey: ['categories'],
       queryFn: async()=> {
@@ -12,10 +16,27 @@ const AddProduct = () => {
         const data = await res.json();
         return data
       }
-    })
+    });
+    //add product
     const handelAddProducts = (data) => {
         console.log(data);
-    }
+        fetch("http://localhost:5000/products", {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(res => res.json())
+        .then(pdData => {
+          console.log(pdData);
+          if (pdData.acknowledged){
+            toast.success("Products Added Successfully!!");
+            navigate(`/dashboard/products/${data.ProductCategoryId}`);
+            
+          } 
+        })
+    };
+    //refetch!!!
     useEffect(()=> {
       refetch();
     },[refetch])
@@ -101,7 +122,7 @@ const AddProduct = () => {
                         {...register("ProductCategoryId", { required: true })}
                         className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                       >
-                        <option>Select</option>
+                       
                         {categories?.map((category) => (
                           <option key={category._id} value={category?._id}>
                             {category?.name}

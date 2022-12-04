@@ -20,6 +20,9 @@ const DashboardLayout = () => {
         <li>
           <Link to="/dashboard">Profile</Link>
         </li>
+        <li>
+          <Link to="/dashboard/all-products">All Products</Link>
+        </li>
         <div className="dropdown dropdown-hover">
           <label
             tabIndex={0}
@@ -33,7 +36,7 @@ const DashboardLayout = () => {
           >
             {categories.map((category) => (
               <li key={category._id}>
-                <Link to={`/categoriesById/${category._id}`}>
+                <Link to={`/dashboard/products/${category._id}`}>
                   {category?.name}
                 </Link>
               </li>
@@ -80,7 +83,7 @@ const DashboardLayout = () => {
                   <Link to="/dashboard">Inventory Management</Link>
                 </div>
                 <div className="flex-none hidden lg:block">
-                  <ul className="menu menu-horizontal text-sm font-semibold uppercase">
+                  <ul className="menu menu-horizontal text-sm px-5 font-semibold uppercase">
                    {menu}
                   </ul>
                 </div>
