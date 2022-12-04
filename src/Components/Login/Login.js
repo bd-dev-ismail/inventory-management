@@ -1,9 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from "react-hot-toast";
 import login from '../../assets/login.png';
 const Login = () => {
   const {register, handleSubmit, formState: {errors}} = useForm();
+  const navigate = useNavigate();
   const handleLogin = (data)=> {
     // console.log(data);
     const user = {
@@ -21,6 +23,17 @@ const Login = () => {
     .then(res => res.json())
     .then(data => {
       console.log(data);
+      if (data.email === false) {
+        return toast.error("User Not Found");
+      }
+      if(data.password === false){
+        return toast.error("Wrong Password");
+      };
+      if(login){
+         toast.success("Login Successful!");
+         navigate("/dashboard");
+         return;
+      }
     })
   }
     return (

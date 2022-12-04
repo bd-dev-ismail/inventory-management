@@ -1,6 +1,7 @@
 
 import AddCategories from "../Dashboard/AddCategories/AddCategories";
 import AddProduct from "../Dashboard/AddProduct/AddProduct";
+import Products from "../Dashboard/Proudcts/Products";
 import UserProfile from "../Dashboard/UserProfile/UserProfile";
 import DashboardLayout from "../Layout/DashboardLayout";
 
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/add-proudct',
                 element: <AddProduct/>
+            },
+            {
+                path: '/dashboard/products',
+                element: <Products/>
             }
         ]
     }
