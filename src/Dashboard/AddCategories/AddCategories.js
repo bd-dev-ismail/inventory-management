@@ -6,7 +6,7 @@ const AddCategories = () => {
     const {register, handleSubmit} = useForm();
     const handelAddcategoris = (data) => {
         console.log(data);
-        fetch("http://localhost:5000/categories", {
+        fetch("https://inventory-management-server-flame.vercel.app/categories", {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

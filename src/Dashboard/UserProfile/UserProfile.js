@@ -9,7 +9,7 @@ const UserProfile = () => {
       queryKey: ["user", user],
       queryFn: async () => {
         const res = await fetch(
-          `http://localhost:5000/user?email=${user}`
+          `https://inventory-management-server-flame.vercel.app/user?email=${user}`
         );
         const data = await res.json();
         return data

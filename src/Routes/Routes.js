@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/products/:id",
         element: <Products />,
-        loader: async ({ params }) => fetch(`http://localhost:5000/products/${params.id}`),
+        loader: async ({ params }) => fetch(`https://inventory-management-server-flame.vercel.app/products/${params.id}`),
       },
     ],
   },

@@ -16,7 +16,7 @@ const Register = () => {
     const image = data.image[0];
     const formData = new FormData();
     formData.append('image', image);
-    const url = `https://api.imgbb.com/1/upload?expiration=600&key=${process.env.REACT_APP_IMGBB_API_KEY}`;
+    const url = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMGBB_API_KEY}`;
     fetch(url, {
       method: 'POST',
       body: formData
@@ -31,7 +31,7 @@ const Register = () => {
         password: data.password
       }
       // setUser(data.email)
-      fetch("http://localhost:5000/register", {
+      fetch("https://inventory-management-server-flame.vercel.app/register", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -47,7 +47,7 @@ const Register = () => {
           }
           if (data.result.acknowledged) {
             setUser(user?.email)
-            fetch(`http://localhost:5000/jwt?email=${user?.email}`)
+            fetch(`https://inventory-management-server-flame.vercel.app/jwt?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
               console.log(data);

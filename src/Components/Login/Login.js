@@ -15,7 +15,7 @@ const Login = () => {
       password: data.password
     }
     console.log(user);
-    fetch("http://localhost:5000/login", {
+    fetch("https://inventory-management-server-flame.vercel.app/login", {
       method: 'POST',
       headers: {
         'content-type': 'application/json'
@@ -33,7 +33,7 @@ const Login = () => {
       };
       if(login){
         setUser(user?.email)
-        fetch(`http://localhost:5000/jwt?email=${user?.email}`)
+        fetch(`https://inventory-management-server-flame.vercel.app/jwt?email=${user?.email}`)
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
