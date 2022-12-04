@@ -25,7 +25,11 @@ const UserProfile = () => {
           <div className="max-w-md  p-8 sm:flex sm:space-x-6 bg-secondary dark:bg-gray-900 dark:text-gray-100">
             <div className="flex-shrink-0 w-full mb-6 h-44 sm:h-32 sm:w-32 sm:mb-0">
               <img
-                src={userdata?.image}
+                src={
+                  userdata?.image
+                    ? userdata?.image
+                    : "https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE="
+                }
                 alt=""
                 className="object-cover object-center w-full h-full rounded dark:bg-gray-500"
               />
@@ -33,7 +37,7 @@ const UserProfile = () => {
             <div className="flex flex-col space-y-4">
               <div>
                 <h2 className="text-2xl font-semibold text-white">
-                  {userdata?.name}
+                  {userdata?.name || "Not Found"}
                 </h2>
                 <span className="text-sm dark:text-gray-400 text-white">
                   Status: <span className="font-bold">Unverified</span>
@@ -53,20 +57,18 @@ const UserProfile = () => {
                     ></path>
                   </svg>
                   <span className="dark:text-gray-400 text-white">
-                    {userdata?.email}
+                    {userdata?.email || "Not Found"}
                   </span>
                 </span>
                 <span className="flex items-center space-x-2">
-                  <span className='text-white'>ID: </span>
+                  <span className="text-white">ID: </span>
                   <span className="dark:text-gray-400 text-white">
-                    {userdata?._id}
+                    {userdata?._id || "Not Found"}
                   </span>
                 </span>
-                <span className='btn btn-sm btn-primary text-white'>Edit</span>
+                <span className="btn btn-sm btn-primary text-white">Edit</span>
               </div>
-              
             </div>
-            
           </div>
         </div>
       </div>
