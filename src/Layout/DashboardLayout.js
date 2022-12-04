@@ -20,15 +20,13 @@ const DashboardLayout = () => {
         <li>
           <Link to="/dashboard">Profile</Link>
         </li>
-        <li>
-          <Link to="/dashboard/all-products">All Products</Link>
-        </li>
+
         <div className="dropdown dropdown-hover">
           <label
             tabIndex={0}
             className="btn btn-link m-1 font-semibold hover:no-underline text-white no-underline"
           >
-            Products Categories
+            All Products
           </label>
           <ul
             tabIndex={0}

@@ -1,14 +1,31 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../Context/AuthProvider';
 
 const UserProfile = () => {
+    const {user} = useContext(AuthContext);
+    console.log('user form profile', user);
+    const {data: userdata} = useQuery({
+      queryKey: ["user", user],
+      queryFn: async () => {
+        const res = await fetch(
+          `http://localhost:5000/user?email=${user}`
+        );
+        const data = await res.json();
+        return data
+      },
+    });
+    console.log('user data data data', userdata);
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div>
-            <h3 className='text-center font-bold text-3xl mb-5'>Welcome to Your Profile</h3>
+          <h3 className="text-center font-bold text-3xl mb-5">
+            Welcome to Your Profile
+          </h3>
           <div className="max-w-md  p-8 sm:flex sm:space-x-6 bg-secondary dark:bg-gray-900 dark:text-gray-100">
             <div className="flex-shrink-0 w-full mb-6 h-44 sm:h-32 sm:w-32 sm:mb-0">
               <img
-                src="https://source.unsplash.com/100x100/?portrait?1"
+                src={userdata?.image}
                 alt=""
                 className="object-cover object-center w-full h-full rounded dark:bg-gray-500"
               />
@@ -16,7 +33,7 @@ const UserProfile = () => {
             <div className="flex flex-col space-y-4">
               <div>
                 <h2 className="text-2xl font-semibold text-white">
-                  Leroy Jenkins
+                  {userdata?.name}
                 </h2>
                 <span className="text-sm dark:text-gray-400 text-white">
                   Status: <span className="font-bold">Unverified</span>
@@ -36,11 +53,20 @@ const UserProfile = () => {
                     ></path>
                   </svg>
                   <span className="dark:text-gray-400 text-white">
-                    leroy.jenkins@company.com
+                    {userdata?.email}
                   </span>
                 </span>
+                <span className="flex items-center space-x-2">
+                  <span className='text-white'>ID: </span>
+                  <span className="dark:text-gray-400 text-white">
+                    {userdata?._id}
+                  </span>
+                </span>
+                <span className='btn btn-sm btn-primary text-white'>Edit</span>
               </div>
+              
             </div>
+            
           </div>
         </div>
       </div>

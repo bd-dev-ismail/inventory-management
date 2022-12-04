@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import login from '../../assets/login.png';
+import { AuthContext } from '../../Context/AuthProvider';
 const Login = () => {
   const {register, handleSubmit, formState: {errors}} = useForm();
   const navigate = useNavigate();
+  const { setUser} = useContext(AuthContext)
   const handleLogin = (data)=> {
     // console.log(data);
     const user = {
@@ -30,9 +32,17 @@ const Login = () => {
         return toast.error("Wrong Password");
       };
       if(login){
-         toast.success("Login Successful!");
-         navigate("/dashboard");
-         return;
+        setUser(user?.email)
+        fetch(`http://localhost:5000/jwt?email=${user?.email}`)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            localStorage.setItem("Access_Token", data.token);
+            toast.success("Login Successful!");
+            navigate("/dashboard");
+            return;
+          });
+         
       }
     })
   }

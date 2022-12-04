@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import toast from "react-hot-toast";
 import registerImg from '../../assets/register.png';
 import { useState } from 'react';
 import Loader from '../Shared/Loader';
+import { AuthContext } from '../../Context/AuthProvider';
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const {register, handleSubmit, formState:{errors}} = useForm();
+  const {setUser} = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleRegister = (data)=> {
     setLoading(true);
     const image = data.image[0];
@@ -27,6 +30,7 @@ const Register = () => {
         email: data.email,
         password: data.password
       }
+      // setUser(data.email)
       fetch("http://localhost:5000/register", {
         method: "POST",
         headers: {
@@ -37,13 +41,23 @@ const Register = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          if(data.message){
+          if (data.result.message) {
             toast.error(data.message);
             setLoading(false);
           }
-          if (data.acknowledged) {
-            toast.success("Registration Successfull!");
-            setLoading(false);
+          if (data.result.acknowledged) {
+            setUser(user?.email)
+            fetch(`http://localhost:5000/jwt?email=${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              localStorage.setItem("Access_Token", data.token);
+               navigate("/dashboard");
+               // setUser(user)
+               toast.success("Registration Successfull!");
+               setLoading(false);
+            })
+           
           }
         })
         .catch((err) => {

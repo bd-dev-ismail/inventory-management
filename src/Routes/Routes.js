@@ -37,10 +37,7 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <UserProfile />,
       },
-      {
-        path: "/dashboard/all-products",
-        element: <AllProducts />,
-      },
+      
       {
         path: "/dashboard/add-categories",
         element: <AddCategories />,
